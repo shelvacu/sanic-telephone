@@ -12,7 +12,7 @@ class CustomRequestHandler(http.server.BaseHTTPRequestHandler):
             pass
 
 def run():
-    httpd = socketserver.TCPServer(('127.0.0.1', 8000),
+    httpd = socketserver.TCPServer(('', 8000),
                                    CustomRequestHandler)
     try:
         httpd.serve_forever()
