@@ -1,5 +1,7 @@
 import json, http.server, socketserver
 
+clients = []
+
 class CustomRequestHandler(http.server.BaseHTTPRequestHandler):
     def do_POST(self):
         if self.path == '/done_img':
@@ -7,7 +9,7 @@ class CustomRequestHandler(http.server.BaseHTTPRequestHandler):
 
     def do_GET(self):
         if self.path == '/':
-            pass
+            clients.append(self.client_address)
         elif self.path == '/poll':
             pass
 
