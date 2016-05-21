@@ -17,9 +17,24 @@
 		</div>
 		
 		<div id="rightbox" class="flex-vert">
-			<canvas id="destimg">
+			<div class="destimg"></div>
 			<div id="rightbelow">Controls<!-- controls --></div>
 		</div>
     </div>
+	
+	
+	<script>
+        // Look ma, no jQuery!
+        LC.init(
+            document.getElementsByClassName('destimg')[0],
+            {imageURLPrefix: '/static/img'}
+        );
+
+        /* or if you just love jQuery,
+            $('.literally').literallycanvas({imageURLPrefix: '/static/img'})
+            or
+            LC.init($('.literally').get(0), {imageURLPrefix: '/static/img'})
+        */
+    </script>
   </body>
 </html>
