@@ -16,6 +16,7 @@ class CustomRequestHandler(http.server.BaseHTTPRequestHandler):
 def run():
     httpd = socketserver.TCPServer(('127.0.0.1', 8000),
                                    CustomRequestHandler)
+    httpd.allow_reuse_address = True
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
