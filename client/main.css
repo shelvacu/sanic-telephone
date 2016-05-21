@@ -1,0 +1,18 @@
+.flex-vert{
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-horiz{
+    display: flex;
+    flex-direction: row;
+}
+
+#main{
+    justify-content: space-between;
+}
+
+#srcimg, #destimg{
+    width:  640;
+    height: 480;
+}
