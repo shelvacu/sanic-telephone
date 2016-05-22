@@ -20,8 +20,8 @@ function setCurUser(uname){
 }
 
 function addToTimeline(imgData, desc){
-    $(body).append('<img src="data:image/png;base64,'+imgData+'"></img>');
-    $(body).append('<p>'+desc+'"</p>');
+    $('body').append('<img class="timelineimg" src="data:image/png;base64,'+imgData+'"/>');
+    $('body').append('<p>'+desc+'</p>');
 }
 
 $(function(){
@@ -54,7 +54,7 @@ $(function(){
 		}
 	    }
 	});
-    },1000);
+    },10000);
     $("#donebutton").click(function(){
 	var img_data = window.sanic_lc.getImage().toDataURL("image/png");
 	img_data = img_data.replace(/^data:image\/(png|jpg);base64,/, "");
