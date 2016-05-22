@@ -21,7 +21,7 @@ function setCurUser(uname){
 
 $(function(){
     console.log("javascript has run");
-    window.sanic_lc = LC.init($("#destimg").get(0),{imageURLPrefix: '/literallycanvas/img'});//$("#destimg").literallycanvas({imageURLPrefix: 'literallycanvas/img'});
+    window.sanic_lc = LC.init($("#destimg").get(0),{imageURLPrefix: '/literallycanvas/img'});
     setInterval(function(){
 	$.ajax({
 	    url: 'poll',
@@ -51,5 +51,9 @@ $(function(){
 	    method: 'POST',
 	    data: JSON.stringify({img: img_data})
 	});
+<<<<<<< HEAD
+})
+=======
     })
 });
+>>>>>>> 3fb8b5d0584b2c76a1b185b5cb6392a9a7571ca0
