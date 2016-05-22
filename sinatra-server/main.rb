@@ -87,5 +87,6 @@ namespace '/:room_id' do
         user.events.create!(data: {img: data['img'], ended: true}.to_json)
       end
     end
+    "{success: true}"
   end
 end
