@@ -4,9 +4,8 @@ rootAddr = os.path.abspath(
     os.path.dirname(__file__) + '/../../client'
 )
 
-print(rootAddr)
-
-clients = []
+clients = None
+running = False
 
 class CustomRequestHandler(http.server.BaseHTTPRequestHandler):
     def do_POST(self):
@@ -26,6 +25,7 @@ class CustomRequestHandler(http.server.BaseHTTPRequestHandler):
         if relaDir == '/':
             clients.append(self.client_address)
         elif relaDir == '/poll':
+            
             pass
         if os.path.exists(absPath):
             if os.path.isdir(absPath):
@@ -47,6 +47,16 @@ class CustomRequestHandler(http.server.BaseHTTPRequestHandler):
 </html>'''.encode('utf-8'))
 
 def run():
+    global clients
+    global running
+
+    if running:
+        print('Can\'t start server; already running')
+        return False
+
+    running = True
+    clients = []
+    
     httpd = socketserver.TCPServer(('', 8000),
                                    CustomRequestHandler)
     httpd.allow_reuse_address = True
@@ -54,5 +64,7 @@ def run():
         httpd.serve_forever()
     except KeyboardInterrupt:
         print('Closing server...')
-    httpd.shutdown()
-    httpd.server_close()
+        httpd.shutdown()
+        httpd.server_close()
+    running = False
+    return True
