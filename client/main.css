@@ -25,9 +25,9 @@ body{
 	height: 369;
 	margin: 0px;
 	padding: 20px;
-	background:#373737;
-	box-shadow:0px 0px 0px 10px #373737;
-	border:4px solid #fff;
+	background:#ffffff;
+	/*box-shadow:0px 0px 0px 10px #; */
+	border:10px solid #373737;
 
 }
 
@@ -50,6 +50,10 @@ button, input {
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+}
+
+button:active {
+	color: blue;
 }
 #leftbelow, #rightbelow{
 	margin: 25 auto auto auto;
