@@ -54,7 +54,7 @@ $(function(){
 		}
 	    }
 	});
-    },10000);
+    },1000);
     $("#donebutton").click(function(){
 	var img_data = window.sanic_lc.getImage().toDataURL("image/png");
 	img_data = img_data.replace(/^data:image\/(png|jpg);base64,/, "");
