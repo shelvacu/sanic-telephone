@@ -13,11 +13,21 @@
     <div id="main" class="flex-horiz">
       <div id="leftbox"  class="flex-vert">
 	<img id="srcimg" />
-	<div id="leftbelow">Buttons <!-- controls? info? --> </div>
+	<div id="leftbelow">
+	  <div id="playerlist-body">
+	    <div id="playerlist-title">Player List</div>
+	    <div id="playerlist-list">
+	      <!--example: <div class="playerlist-elem">Mr. Username</div>-->
+	    </div>
+	  </div>
+	</div>
       </div>
       <div id="rightbox" class="flex-vert">
 	<div id="destimg"></div>
-	<div id="rightbelow"><button type="button" id="donebutton">Done</button></div>
+	<div id="rightbelow">
+	  <input type="text" id="imgdesc" placeholder="Describe your drawing"></input>
+	  <button type="button" id="donebutton">Done</button>
+	</div>
       </div>
     </div>
   </body>
