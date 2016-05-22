@@ -52,10 +52,14 @@ body{
     overflow-y: scroll;
 }
 
-.playerlist-elem{
+.playerlist-elem, .playerlist-elem-cur{
     height: 20;
     padding: 10;
     margin: 0 0 10 0;
-    background-color: #ffffff;
     overflow: hidden;
+    background-color: #ffffff;
+}
+
+.playerlist-elem-cur{
+    border: 5px solid #000000;
 }

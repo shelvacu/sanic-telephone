@@ -1,3 +1,25 @@
+function addUser(uname){
+    $('#playerlist-list').append('<div class="playerlist-elem">' + uname + '</div>')
+    return $(this);
+}
+
+function setCurUser(uname){
+    $('#playerlist-list>div').each(function(){
+	if ($(this).attr('class') === 'playerlist-elem-cur'){
+	    $(this).removeClass('playerlist-elem-cur');
+	    $(this).addClass('playerlist-elem');
+	}
+    });
+    found = false;
+    $('#playerlist-list>div').each(function(){
+	if ($(this).html() === uname){
+	    $(this).removeClass('playerlist-elem');
+	    $(this).addClass('playerlist-elem-cur');
+	    return false;
+	}
+    });
+}
+
 $(function(){
     console.log("javascript has run");
     window.sanic_lc = LC.init($("#destimg").get(0),{imageURLPrefix: 'literallycanvas/img'});//$("#destimg").literallycanvas({imageURLPrefix: 'literallycanvas/img'});
