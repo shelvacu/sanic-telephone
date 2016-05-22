@@ -25,9 +25,9 @@ body{
 	height: 369;
 	margin: 0px;
 	padding: 20px;
-	background:#373737;
-	box-shadow:0px 0px 0px 10px #373737;
-	border:4px solid #fff;
+	background:#ffffff;
+	/*box-shadow:0px 0px 0px 10px #; */
+	border:10px solid #373737;
 
 }
 
@@ -51,6 +51,10 @@ button, input {
     display: inline-block;
     font-size: 16px;
 }
+
+button:active {
+	color: blue;
+}
 #leftbelow, #rightbelow{
 	margin: 25 auto auto auto;
 	
@@ -70,7 +74,7 @@ button, input {
 	background-color: #847c73;
 	text-align: center;
 	font-size: 1.3em;
-	
+	font-weight: bold;
 }
 
 #playerlist-list{
@@ -83,10 +87,14 @@ button, input {
 	overflow-y: scroll;
 }
 
-.playerlist-elem{
-	height: 20;
-	padding: 10;
-	margin: 0 0 10 0;
-	background-color: #ffffff;
-	overflow: hidden;
+.playerlist-elem, .playerlist-elem-cur{
+    height: 20;
+    padding: 10;
+    margin: 0 0 10 0;
+    overflow: hidden;
+    background-color: #dddddd;
+}
+
+.playerlist-elem-cur{
+    border: 5px solid #000000;
 }
