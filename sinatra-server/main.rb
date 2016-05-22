@@ -51,7 +51,7 @@ namespace '/:room_id' do
   
   get '/poll' do
     if @room.drawing_user.nil?
-      @user.events.create!(data: {img: Base64.encode64(File.read('sanic.png'))}.to_json)
+      @user.events.create!(data: {img: Base64.encode64(File.read('shia.png'))}.to_json)
       @room.drawing_user = @user
       @room.save!
     end
