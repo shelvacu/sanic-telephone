@@ -1,34 +1,13 @@
 <html>
-	  <head>
-	    <title>SANIC TELEPHONE ZOMG</title>
-	    <link rel="stylesheet" href="main.css">
-	    <link rel="stylesheet" href="literallycanvas/css/literallycanvas.css">
-	    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react-with-addons.min.js"></script>
-	    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react-dom.min.js"></script>
-	    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-rc1/jquery.min.js"></script>
-	    <script src="literallycanvas/js/literallycanvas.js"></script>
-	    <script src="main.js"></script>
-	  </head>
-	  <body>
-	    <div id="main" class="flex-horiz">
-	      <div id="leftbox"  class="flex-vert">
-		<img id="srcimg" src= "data:image/png;base64,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"/>
-		<div id="leftbelow">
-		  <div id="playerlist-body">
-		    <div id="playerlist-title">Player List</div>
-		    <div id="playerlist-list">
-		      <!--example: <div class="playerlist-elem">Mr. Username</div>-->
-		    </div>
-		  </div>
-		</div>
-	      </div>
-	      <div id="rightbox" class="flex-vert">
-		<div id="destimg"></div>
-		<div id="rightbelow">
-		  <input type="text" id="imgdesc" placeholder="Describe your drawing"></input>
-		  <button type="button" id="donebutton">Done</button>
-		</div>
-	      </div>
-	    </div>
-	  </body>
-	</html>
+  <head>
+	<title> SANIC </title>
+  </head>
+  <body>
+	<form method="POST" action="/">
+	  <label>
+	<h3>Create a new room called:</h3>
+	<input type="text" name="room_name" />
+	  </label>
+	</form>
+  </body>
+</html>
