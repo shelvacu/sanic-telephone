@@ -2,71 +2,90 @@ require 'sinatra'
 require 'sqlite3'
 require 'json'
 require 'base64'
-require 'activerecord'
+require 'active_record'
+require 'sinatra/namespace'
 require './models.rb'
+
+CHARS = [*('A'..'Z'),*('a'..'z'),*('0'..'9')]
 
 enable :sessions
 
-$myid = rand(10000)
-$id = rand(10000)
-
-$waiting = [] #who is in line for drawing
-$drawing = nil #who is drawing
-$done = [] #who is done drawing waiting for end
-
-$events = {}
-
 set :public_folder, '../client'
+set :session_secret, 'super duper secret thing that I sure hope no one will guess except of course people who look in the github repository but whatevs'
 
-before do
-  if session[:myid].nil?
-    session[:myid] = $myid
-  else
-    if session[:myid] != $myid
-      session[:myid] = $myid
-      reset = true
-    end
-  end
-  if session[:id].nil? || reset
-    session[:id] = ($id += 1)
-    $waiting << session[:id]
-  end
-  @id = session[:id]
-end  
 
 get '/' do
-  $waiting << @id
-  redirect to '/index.html'
+  redirect to("/index.html")
 end
 
-get '/poll' do
-  $events[@id] ||= []
-  if $drawing.nil?
-    $events[@id] << {img: Base64.encode64(File.read('sanic.png'))}
-    $drawing = @id
-    $waiting.delete(@id)
-  end
-  event = $events[@id].shift
-  puts event.inspect
-  if event.nil?
-    next {success: true, newevent: false}.to_json
-  else
-    next {success: true, newevent: true, ended: false}.merge(event).to_json
-  end
+post '/' do
+  r = Room.create!(url: params[:room_name])
+  redirect to("/#{r.url}/")
 end
 
-post '/done_img' do
-  request.body.rewind
-  data = JSON::parse request.body.read
-  puts "WAITING LENGTH IS #{$waiting.length}"
-  if $waiting.length > 0
-    new_drawer = $waiting.shift
-    $drawing = new_drawer
-    $done << @id
-    $events[$drawing] << data
-  else
-    $done.each do |ip|
-      $events[ip] << {img: data['img'], ended: true}
+get '/:room_id' do
+  redirect to(request.url + "/")
+end
+
+get '/:room_id/' do
+  puts "YAY"
+  send_file File.expand_path('main.html', settings.public_folder)
+end  
+
+namespace '/:room_id' do
+  before do
+    @room = Room.find_by(url: params[:room_id])
+    puts "room is nil" if @room.nil?
+    halt 404 if @room.nil?
+    if session[:user_id].nil? or User.find(session[:user_id]).nil?
+      @user = @room.users.create!(
+        username: 10.times.map{CHARS.sample}.join(''),
+        last_contact: Time.now,
+        ip_address: request.ip
+      )
+      session[:user_id] = @user.id
+    else
+      @user = User.find(session[:user_id])
+    end
+  end
+  
+  get '/poll' do
+    if @room.drawing_user.nil?
+      @user.events.create!(data: {img: Base64.encode64(File.read('sanic.png'))}.to_json)
+      @room.drawing_user = @user
+      @room.save!
+    end
+
+    event = @user.events.order(:id).first
+    if event.nil?
+      next {success: true, newevent: false}.to_json
+    else
+      event.destroy!
+      next {success: true, newevent: true, ended: false}.transform_keys(&:to_s).merge(JSON::parse(event.data)).to_json
+    end
+  end
+
+  post '/done_img' do
+    #make sure user is the one that is drawing
+    halt 403 unless @room.drawing_user = @user
+    request.body.rewind
+    data = JSON::parse request.body.read
+    Image.create!(
+      room: @room,
+      user: @user,
+      description: data["description"],
+      order: Image.order(:order).last.try(:order) || 1,
+      image_data: data["img"]
+    )
+    if not @user.next_user.nil?
+      new_drawer = @user.next_user
+      @room.drawing_user = new_drawer
+      new_drawer.events.create!(data: data.to_json)
+      @room.save!
+    else
+      @room.users.each do |user|
+        user.events.create!(data: {img: data['img'], ended: true}.to_json)
+      end
     end
   end
 end
