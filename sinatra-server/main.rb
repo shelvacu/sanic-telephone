@@ -74,7 +74,7 @@ namespace '/:room_id' do
       room: @room,
       user: @user,
       description: data["description"],
-      order: Image.order(:order).last.try(:order) || 1
+      order: Image.order(:order).last.try(:order) || 1,
       image_data: data["img"]
     )
     if not @user.next_user.nil?
