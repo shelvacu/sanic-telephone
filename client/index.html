@@ -11,14 +11,26 @@
   </head>
   <body>
     <div id="main" class="flex-horiz">
-      <div id="leftbox"  class="flex-vert">
-	<img id="srcimg" />
-	<div id="leftbelow">Buttons <!-- controls? info? --> </div>
-      </div>
-      <div id="rightbox" class="flex-vert">
-	<div id="destimg"></div>
-	<div id="rightbelow">Controls<!-- controls --></div>
-      </div>
+		<div id="leftbox"  class="flex-vert">
+			<img id="srcimg"></img>
+			<div id="leftbelow">Buttons <!-- controls? info? --> </div>
+		</div>
+		
+		<div id="rightbox" class="flex-vert">
+			<div class="destimg"></div>
+			<div id="rightbelow">Controls<!-- controls --></div>
+		</div>
     </div>
+	
+	
+	<script>
+        // Creating the widget
+        LC.init(
+            document.getElementsByClassName('destimg')[0],
+            {imageURLPrefix: 'literallycanvas/img'}
+        );
+
+        
+    </script>
   </body>
 </html>
