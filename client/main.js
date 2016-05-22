@@ -19,8 +19,9 @@ function setCurUser(uname){
     });
 }
 
-function addToTimeline(imgData){
+function addToTimeline(imgData, desc){
     $(body).append('<img src="data:image/png;base64,'+imgData+'"></img>');
+    $(body).append('<p>'+desc+'"</p>');
 }
 
 $(function(){
@@ -43,6 +44,13 @@ $(function(){
 		}
 		if('curuser' in data) {
 		    setCurUser(data.curuser);
+		}
+		if(data.ended){
+		    $.each(data.ending_images, function(){
+			var imgData = this.img;
+			var desc = this.description;
+			addToTimeline(imgData, desc);
+		    });
 		}
 	    }
 	});
