@@ -31,6 +31,14 @@ $(function(){
 		    console.log("There is a new event!");
 		    $("#srcimg").attr('src', 'data:image/png;base64,'+data.img);
 		}
+		if('newusers' in data) {
+		    for(var nu in data.newusers){
+			addUser(nu);
+		    }
+		}
+		if('curuser' in data) {
+		    setCurUser(data.curuser);
+		}
 	    }
 	});
     },10000);
