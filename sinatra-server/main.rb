@@ -1,6 +1,9 @@
 require 'sinatra'
+require 'sqlite3'
 require 'json'
 require 'base64'
+require 'activerecord'
+require './models.rb'
 
 enable :sessions
 
