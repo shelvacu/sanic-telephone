@@ -19,6 +19,10 @@ function setCurUser(uname){
     });
 }
 
+function addToTimeline(imgData){
+    $(body).append('<img src="data:image/png;base64,'+imgData+'"></img>');
+}
+
 $(function(){
     console.log("javascript has run");
     window.sanic_lc = LC.init($("#destimg").get(0),{imageURLPrefix: '/literallycanvas/img'});//$("#destimg").literallycanvas({imageURLPrefix: 'literallycanvas/img'});

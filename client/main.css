@@ -20,7 +20,7 @@ body{
 	margin: 50;
 }
 
-#srcimg{
+#srcimg, timelineimg{
 	width:  579;
 	height: 369;
 	margin: 0px;
