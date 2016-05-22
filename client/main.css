@@ -8,11 +8,8 @@
     flex-direction: row;
 }
 
-#main{
-    justify-content: space-between;
-}
 
-#srcimg, #destimg{
+#srcimg{
     width:  640;
     height: 480;
 }

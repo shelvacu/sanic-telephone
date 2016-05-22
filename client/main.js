@@ -1,4 +1,4 @@
-$(function(){
+
     console.log("javascript has run");
-    $("#destimg").literallycanvas({imageURLPrefix: 'literallycanvas/img'})
-})
+    var sketcher = atrament('#mySketcher',2000,2000);
+
