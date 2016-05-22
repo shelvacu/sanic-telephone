@@ -68,17 +68,17 @@ namespace '/:room_id' do
       event.destroy!
       res = res.merge({newevent: true, ended: false}).transform_keys(&:to_s).merge(JSON::parse(event.data))
       if res[:ended] || res["ended"]
-        res["images"] = @room.images.order(:order).map{|img|
-          {img: img.data, description: img.description}
+        res["ending_images"] = @room.images.order(:order).map{|img|
+          {img: img.image_data, description: img.description}
         }
       end
-      next res
+      next res.to_json
     end
   end
 
   post '/done_img' do
     #make sure user is the one that is drawing
-    halt 403 unless @room.drawing_user = @user
+    halt 403 unless @room.drawing_user == @user
     request.body.rewind
     data = JSON::parse request.body.read
     Image.create!(
