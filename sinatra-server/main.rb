@@ -70,6 +70,13 @@ namespace '/:room_id' do
     halt 403 unless @room.drawing_user = @user
     request.body.rewind
     data = JSON::parse request.body.read
+    Image.create!(
+      room: @room,
+      user: @user,
+      description: data["description"],
+      order: Image.order(:order).last.try(:order) || 1
+      image_data: data["img"]
+    )
     if not @user.next_user.nil?
       new_drawer = @user.next_user
       @room.drawing_user = new_drawer
