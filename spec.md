@@ -14,4 +14,18 @@ POST /$ROOMID/done_img - this is the client notifying the server that it has fin
     {img: "VGhpcyBpcyBzb21lIGV4YW1wbGUgZGF0YS4=" //A base64 string representation of the finished image in PNG format
     desc: ... //description of image being sent
     }
-    
+
+
+
+ending images stuff
+
+{...
+ newevent:true,
+ ended: true,
+ ending_images:[
+   {img: "VGhpcyBpcyBzb21lIGV4YW1wbGUgZGF0YS4=",
+    description: "This is a pretty cool image"}
+   ... //more images
+ ]
+}
+ 

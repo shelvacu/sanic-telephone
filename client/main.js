@@ -25,7 +25,7 @@ function addToTimeline(imgData){
 
 $(function(){
     console.log("javascript has run");
-    window.sanic_lc = LC.init($("#destimg").get(0),{imageURLPrefix: '/literallycanvas/img'});//$("#destimg").literallycanvas({imageURLPrefix: 'literallycanvas/img'});
+    window.sanic_lc = LC.init($("#destimg").get(0),{imageURLPrefix: '/literallycanvas/img'});
     setInterval(function(){
 	$.ajax({
 	    url: 'poll',
@@ -35,17 +35,18 @@ $(function(){
 		    console.log("There is a new event!");
 		    $("#srcimg").attr('src', 'data:image/png;base64,'+data.img);
 		}
-		if('newusers' in data) {
-		    for(var nu in data.newusers){
-			addUser(nu);
-		    }
+		if('users' in data) {
+		    $(".playerlist-elem").remove();
+		    $.each(data.users,function(){
+			addUser(this);
+		    })
 		}
 		if('curuser' in data) {
 		    setCurUser(data.curuser);
 		}
 	    }
 	});
-    },10000);
+    },1000);
     $("#donebutton").click(function(){
 	var img_data = window.sanic_lc.getImage().toDataURL("image/png");
 	img_data = img_data.replace(/^data:image\/(png|jpg);base64,/, "");
@@ -53,7 +54,7 @@ $(function(){
 	$.ajax({
 	    url: 'done_img',
 	    method: 'POST',
-	    data: JSON.stringify({img: img_data})
+	    data: JSON.stringify({img: img_data, description: desc})
 	});
     })
 });

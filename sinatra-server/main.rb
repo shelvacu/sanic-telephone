@@ -37,7 +37,7 @@ namespace '/:room_id' do
     @room = Room.find_by(url: params[:room_id])
     puts "room is nil" if @room.nil?
     halt 404 if @room.nil?
-    if session[:user_id].nil? or User.find(session[:user_id]).nil?
+    if session[:user_id].nil? or User.find_by(id: session[:user_id], room: @room).nil?
       @user = @room.users.create!(
         username: 10.times.map{CHARS.sample}.join(''),
         last_contact: Time.now,
@@ -57,11 +57,22 @@ namespace '/:room_id' do
     end
 
     event = @user.events.order(:id).first
+    res = {
+      success: true,
+      users: @room.users.pluck(:username),
+      curuser: @room.drawing_user.username
+    }
     if event.nil?
-      next {success: true, newevent: false}.to_json
+      next res.merge({newevent: false}).to_json
     else
       event.destroy!
-      next {success: true, newevent: true, ended: false}.transform_keys(&:to_s).merge(JSON::parse(event.data)).to_json
+      res = res.merge({newevent: true, ended: false}).transform_keys(&:to_s).merge(JSON::parse(event.data))
+      if res[:ended] || res["ended"]
+        res["images"] = @room.images.order(:order).map{|img|
+          {img: img.data, description: img.description}
+        }
+      end
+      next res
     end
   end
 
@@ -87,5 +98,6 @@ namespace '/:room_id' do
         user.events.create!(data: {img: data['img'], ended: true}.to_json)
       end
     end
+    "{success: true}"
   end
 end
